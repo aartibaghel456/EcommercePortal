@@ -1,0 +1,31 @@
+/* Set a style for the submit button */
+
+  
+  .btn:hover {
+    opacity: 1;
+  }
+  
+
+    
+    .btn:hover {
+      opacity: 1;
+    }
+    .form{
+    max-width:500px !important;margin:auto;
+    border: 1px solid gray;
+     padding: 20px; background-color: aliceblue;
+
+    }
+    .red{
+        border:1px solid red;
+    }
+    .error{
+      color: red;
+    }
+    .hide{
+      display: none;
+    }
+    .ui.form .field>label{
+        margin-left: 10px !important;
+        display: inline-block;
+    }
