@@ -48,8 +48,8 @@ const MainHeader = () => {
                                             <div class="ht-language-trigger"><span>English</span></div>
                                             <div class="language ht-language">
                                                 <ul class="ht-setting-list">
-                                                    <li class="active"><a href="#"><img src="assets/image/menu/flag-icon/1.jpg" alt=""/>English</a></li>
-                                                    <li><a href="#"><img src="assets/image/menu/flag-icon/2.jpg" alt=""/>Français</a></li>
+                                                    <li class="active"><a href="#"><img src="/assets/image/menu/flag-icon/1.jpg" alt=""/>English</a></li>
+                                                    <li><a href="#"><img src="/assets/image/menu/flag-icon/2.jpg" alt=""/>Français</a></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -62,16 +62,16 @@ const MainHeader = () => {
                 <div class="header-middle pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0">
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-2">
                                 <div class="logo pb-sm-30 pb-xs-30">
-                                    <a href="index.html">
-                                        <img src="assets/image/menu/logo/1.jpg" alt=""/>
+                                    <a href="">
+                                        <img src="/assets/image/menu/logo/1.jpg" alt=""/>
                                         
                                     
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
+                            <div class="col-lg-10 ml-sm-15 ml-xs-15">
                                 <form action="#" class="hm-searchbox">
                                     <select class="nice-select select-search-category">
                                         <option value="0">All</option>                         
@@ -171,7 +171,7 @@ const MainHeader = () => {
                                                 <ul class="minicart-product-list">
                                                     <li>
                                                         <a href="single-product.html" class="minicart-product-image">
-                                                            <img src="assets/image/product/small-size/5.jpg" alt="cart products"/>
+                                                            <img src="/assets/image/product/small-size/5.jpg" alt="cart products"/>
                                                         </a>
                                                         <div class="minicart-product-details">
                                                             <h6><a href="single-product.html">Aenean eu tristique</a></h6>
@@ -183,7 +183,7 @@ const MainHeader = () => {
                                                     </li>
                                                     <li>
                                                         <a href="single-product.html" class="minicart-product-image">
-                                                            <img src="assets/image/product/small-size/6.jpg" alt="cart products"/>
+                                                            <img src="/assets/image/product/small-size/6.jpg" alt="cart products"/>
                                                         </a>
                                                         <div class="minicart-product-details">
                                                             <h6><a href="single-product.html">Aenean eu tristique</a></h6>

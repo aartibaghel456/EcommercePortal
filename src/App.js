@@ -22,6 +22,8 @@ import AddNewPage from './admin/PageManagment/AddNewPage';
 import EditPage from './admin/PageManagment/EditPage';
 import MainLayout from './Layout/MainLayout';
 import Home from './Pages/Home';
+import ProductDeatils from './Pages/ProductDetails';
+import CategoryProduct from './Pages/Category-Product';
 
 function App() {
   let authed = localStorage.getItem("userInfo");
@@ -31,6 +33,8 @@ function App() {
     <Routes>
         <Route path="/" element={<MainLayout />}>
            <Route index element={<Home />} />
+           <Route path='/products-details/:id' element={<ProductDeatils />} />
+           <Route path='/category-product/:id' element={<CategoryProduct />} />
     
         </Route>
      

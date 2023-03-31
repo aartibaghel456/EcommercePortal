@@ -111,7 +111,7 @@ app.get('/products', function (req, res) {
     if (!product_id) {
     return res.status(400).send({ error: true, message: 'Please provide product_id' });
     }
-    dbConn.query('SELECT * FROM products where id=?', product_id, function (error, results, fields) {
+    dbConn.query('SELECT pd.id,pd.title,pd.description,pd.price,pd.image_url,cat.id as category_id ,cat.category_name,cr.id as currency_id,cr.name,cr.symbol FROM products as pd left join categories as cat on cat.id = pd.category_id join currency as cr on cr.id = pd.currency_id where pd.id=?', product_id, function (error, results, fields) {
     if (error) throw error;
     return res.send({ error: false, data: results[0], message: 'products list.' });
     });
@@ -308,6 +308,20 @@ app.post('/login', function (req, res) {
         })
 
       })
+
+// Retrieve categoryproduct with id 
+app.get('/categoryproduct/:id', function (req, res) {
+    let categoryproduct_id = req.params.id;
+    if (!categoryproduct_id) {
+    return res.status(400).send({ error: true, message: 'Please provide categoryproduct_id' });
+    }
+   
+    dbConn.query('SELECT pd.id,pd.title,pd.description,pd.price,pd.image_url,cat.id as category_id ,cat.category_name,cr.id as currency_id,cr.name,cr.symbol FROM products as pd left join categories as cat on cat.id = pd.category_id join currency as cr on cr.id = pd.currency_id where pd.category_id=?', categoryproduct_id, function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results, message: 'categoryproduct list.' });
+    });
+    });
+
   // set port
   app.listen(5000, function () {
     console.log('Node app is running on port 5000');
