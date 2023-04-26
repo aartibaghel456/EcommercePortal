@@ -23,7 +23,10 @@ import EditPage from './admin/PageManagment/EditPage';
 import MainLayout from './Layout/MainLayout';
 import Home from './Pages/Home';
 import ProductDeatils from './Pages/ProductDetails';
-import CategoryProduct from './Pages/Category-Product';
+import CategoryProduct from './Pages/CategoryProduct';
+import Checkout from './Pages/Checkout';
+import Fullcart from './Pages/Fullcart';
+import RegisterLogin from './Pages/RegisterLogin';
 
 function App() {
   let authed = localStorage.getItem("userInfo");
@@ -35,6 +38,9 @@ function App() {
            <Route index element={<Home />} />
            <Route path='/products-details/:id' element={<ProductDeatils />} />
            <Route path='/category-product/:id' element={<CategoryProduct />} />
+           <Route path='/check-out' element={<Checkout />} />
+           <Route path='/full-cart' element={<Fullcart />} />
+           <Route path='/register-login' element={<RegisterLogin />} />
     
         </Route>
      

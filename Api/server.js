@@ -64,7 +64,7 @@ app.post('/addnewuser', function (req, res) {
         return res.send({ error: false, data: results[0], message: 'users list.',userExist:true });
         }
         else{
-            var sql = "INSERT INTO users (name,email,phone,username,password,address,city,zip,role_id) VALUES ('"+user.name+"', '"+user.email+"', '"+user.phone+"', '"+user.username+"', '"+user.password+"','"+user.address+"','"+user.city+"','"+user.zip+"',1)";
+            var sql = "INSERT INTO users (name,email,phone,username,password,address,city,zip,role_id) VALUES ('"+user.name+"', '"+user.email+"', '"+user.phone+"', '"+user.username+"', '"+user.password+"','"+user.address+"','"+user.city+"','"+user.zip+"',4)";
     dbConn.query(sql, function (error, results, fields) {
     if (error) throw error;
     return res.send({ error: false, data: results, message: 'New user has been created successfully.' });
@@ -225,6 +225,8 @@ app.get('/pages', function (req, res) {
     return res.send({ error: false, data: results, message: 'pages list.' });
     });
     });
+
+
     // Retrieve page with id 
     app.get('/page/:id', function (req, res) {
     let page_id = req.params.id;
@@ -321,6 +323,64 @@ app.get('/categoryproduct/:id', function (req, res) {
     return res.send({ error: false, data: results, message: 'categoryproduct list.' });
     });
     });
+    let genrateOrder = () => {
+        let s4 = () => {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        //return id of format 'aaaaaaaa'-'aaaa'-'aaaa'-'aaaa'-'aaaaaaaaaaaa'
+        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
+    }
+
+    // create order
+    app.post('/createorder', function (req, res) {
+        let orders = req.body;
+        let customerbilling = req.body.billing_info;
+        let customershipping = req.body.shipping_info;               
+        let order_products = req.body.product_info;
+        var sql = "INSERT INTO customer_billing (country,first_name,last_name,company_name,address,address1,city,state,postcode,email_address,phone,create_an_account) VALUES ('"+customerbilling.country+"','"+customerbilling.first_name+"','"+customerbilling.last_name+"','"+customerbilling.company_name+"','"+customerbilling.address+"','"+customerbilling.address1+"','"+customerbilling.city+"','"+customerbilling.state+"','"+customerbilling.postcode+"','"+customerbilling.email_address+"','"+customerbilling.phone+"','"+customerbilling.create_an_account+"')";
+        dbConn.query(sql, function (error, billing_results, fields) {
+        if (error) throw error;
+        let billing_id = billing_results.insertId;
+        if(customerbilling.create_an_account){
+            var sql = "INSERT INTO users (name,email,phone,username,address,city,zip,role_id) VALUES ('"+customerbilling.first_name+"','"+customerbilling.email_address+"','"+customerbilling.phone+"','"+customerbilling.email_address+"','"+customerbilling.address+"','"+customerbilling.city+"','"+customerbilling.postcode+"','4')";
+            dbConn.query(sql, function (error, billing_results, fields) {
+            if (error) throw error;
+            })   
+        }
+         var sql = "INSERT INTO customer_shipping (country,first_name,last_name,company_name,address,address1,city,state,postcode,email_address,phone) VALUES ('"+customershipping.country+"','"+customershipping.first_name+"','"+customershipping.last_name+"','"+customershipping.company_name+"','"+customershipping.address+"','"+customershipping.address1+"','"+customershipping.city+"','"+customershipping.state+"','"+customershipping.postcode+"','"+customershipping.email_address+"','"+customershipping.phone+"')";
+        dbConn.query(sql, function (error, shipping_results, fields) {
+        if (error) throw error;
+        let shipping_id = shipping_results.insertId;        
+        var sql = "INSERT INTO orders (order_number,customer_id,subtotal,total,billing_address_id,shipping_address_id,status,payment_type,order_notes) VALUES ('"+orders.order_number+"','"+orders.customer_id+"','"+orders.subtotal+"','"+orders.total+"','"+billing_id+"','"+shipping_id+"','"+orders.status+"','"+orders.payment_type+"','"+orders.order_notes+"')";
+        dbConn.query(sql, function (error, orders_results, fields) {
+        if (error) throw error;
+        let order_id = orders_results.insertId;
+        let product_payload = [];
+        order_products.forEach((item)=>{
+        let product =[order_id,item.id,"1",item.price]
+        product_payload.push(product);
+        });
+        var sql = "INSERT INTO order_products (order_id,product_id,product_quantity,price) VALUES ?";
+        dbConn.query(sql,[product_payload], function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'New customershipping has been created successfully.' });
+        });
+        });
+    });
+    });
+    });
+
+
+    // PaymentMethods
+app.get('/paymentmethods', function (req, res) {
+    dbConn.query('SELECT * FROM payment_methods', function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results, message: 'paymentmethods list.' });
+    });
+    });
+
 
   // set port
   app.listen(5000, function () {

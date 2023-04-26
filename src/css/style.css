@@ -1584,7 +1584,6 @@ textarea:focus {
 	right: 0;
 	top: 100%;
 	z-index: 9;
-	display: none;
 	border: 1px solid #e5e5e5;
 	padding: 20px;
 	width: 290px;
@@ -2373,6 +2372,7 @@ a, button, input{
 .add-actions-link li:hover {
 	background: #fed700;
 	border-color: #fed700;
+	cursor: pointer;
 }
 .add-actions-link li a {
 	color: #a4a4a4;
@@ -3852,10 +3852,14 @@ thead {
 .payment-method {
 	margin-top: 40px;
 }
+.payment{
+	float: left;
+}
 .payment-accordion .card {
 	border: 0;
 	border-radius: 0;
 	background: #f2f2f2;
+	
 }
 .payment-accordion .card-header {
 	padding: 0;
@@ -5447,6 +5451,12 @@ span.required {
 .small-version {
   display: none;
 }
+
+a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+  }
+
 /*----------------------------------------------------------------------------------------------------*/
 /*------------------------------------------> The End <-----------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------*/
