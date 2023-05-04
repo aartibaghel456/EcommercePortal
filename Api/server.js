@@ -353,7 +353,7 @@ app.get('/categoryproduct/:id', function (req, res) {
         dbConn.query(sql, function (error, shipping_results, fields) {
         if (error) throw error;
         let shipping_id = shipping_results.insertId;        
-        var sql = "INSERT INTO orders (order_number,customer_id,subtotal,total,billing_address_id,shipping_address_id,status,payment_type,order_notes) VALUES ('"+orders.order_number+"','"+orders.customer_id+"','"+orders.subtotal+"','"+orders.total+"','"+billing_id+"','"+shipping_id+"','"+orders.status+"','"+orders.payment_type+"','"+orders.order_notes+"')";
+        var sql = "INSERT INTO orders (order_number,customer_id,subtotal,total,billing_address_id,shipping_address_id,status,payment_type,payment_status,transaction_id,order_notes) VALUES ('"+orders.order_number+"','"+orders.customer_id+"','"+orders.subtotal+"','"+orders.total+"','"+billing_id+"','"+shipping_id+"','"+orders.status+"','"+orders.payment_type+"','"+orders.payment_status+"','"+orders.transaction_id+"','"+orders.order_notes+"')";
         dbConn.query(sql, function (error, orders_results, fields) {
         if (error) throw error;
         let order_id = orders_results.insertId;
@@ -378,6 +378,63 @@ app.get('/paymentmethods', function (req, res) {
     dbConn.query('SELECT * FROM payment_methods', function (error, results, fields) {
     if (error) throw error;
     return res.send({ error: false, data: results, message: 'paymentmethods list.' });
+    });
+    });
+
+    //add new payment
+app.post('/addnewpayment', function (req, res) {
+    let payment = req.body;
+    
+            var sql = "INSERT INTO payment_methods (payment_type,description) VALUES ('"+payment.payment_type+"','"+payment.description+"')";
+    dbConn.query(sql, function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results, message: 'New payment_methods has been created successfully.' });
+    });
+        
+        });
+
+        //  Delete paymentmethods
+    app.delete('/paymentmethods', function (req, res) {
+        let payment_id = req.body.payment_id;
+        if (!payment_id) {
+        return res.status(400).send({ error: true, message: 'Please provide payment_id' });
+        }
+        dbConn.query('DELETE FROM payment_methods WHERE id = ?', [payment_id], function (error, results, fields) {
+        if (error) throw error;
+        return res.send({ error: false, data: results, message: 'payment_methods has been updated successfully.' });
+        });
+        });
+
+    // Orders 
+app.get('/orders', function (req, res) {
+    dbConn.query('SELECT * FROM `orders` as o JOIN users as u on o.customer_id = u.id group by o.id', function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results, message: 'orders list.' });
+    });
+    });
+
+    // OrderDetails 
+app.get('/orderdetails/:id', function (req, res) {
+    var order_id=req.params.id;
+    dbConn.query('SELECT * FROM `orders` as o JOIN order_products as u on o.id = u.order_id where o.id=?',order_id, function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results, message: 'orders list.' });
+    });
+    });
+
+    // Billing 
+app.get('/billing', function (req, res) {
+    dbConn.query('SELECT * FROM customer_billing', function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results, message: 'customer_billing list.' });
+    });
+    });
+
+    // Shipping 
+app.get('/shipping', function (req, res) {
+    dbConn.query('SELECT * FROM customer_shipping', function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results, message: 'customer_shipping list.' });
     });
     });
 

@@ -32,6 +32,7 @@ const Pages = (props) => {
         console.log("ID: ", id)
         axios.delete('http://localhost:5000/page',{data:{page_id:id}}).then((res)=>{
 console.log(res)
+window.location.reload(false);
         })
       }
       

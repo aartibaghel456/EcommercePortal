@@ -33,6 +33,7 @@ const Users = (props) => {
         console.log("ID: ", id)
         axios.delete('http://localhost:5000/user',{data:{user_id:id}}).then((res)=>{
 console.log(res)
+window.location.reload(false);
         })
       }
       

@@ -6,6 +6,7 @@ import axios from 'axios';
 const MainHeader = () => {
   const navigate = useNavigate();
   const [getShowmincart, setShowmincart] = useState(false);
+  const [getSelectedCategory, setSelectedCategory] = useState(false);
   const [getCartProducts, setCartProducts] = useState(JSON.parse(localStorage.getItem('cartProducts')));
   const [getCategories, setCategories] = useState([]);
   const logOut = (e) => {
@@ -22,6 +23,14 @@ const MainHeader = () => {
             document.removeEventListener("updateCart",(data)=>{});
         };
   },[])
+const serachProducts=() =>{
+    console.log("helloo");
+}
+
+const onchangeSelectCategory = (event) => {
+    setSelectedCategory({...getSelectedCategory,[event.target.name]: event.target.value})
+  }
+
    const  updateCart = (product)=>{
         let cartProducts = [];
         cartProducts.push(product)
@@ -143,7 +152,8 @@ const MainHeader = () => {
                             <div class="col-lg-10 ml-sm-15 ml-xs-15">
                            <form action="#" class="hm-searchbox">
                            
-                                    <select class="nice-select select-search-category">
+                                    <select class="nice-select select-search-category" onChange={onchangeSelectCategory} >
+                                    <option value="">Select Cetogary</option>
                                     {
                       getCategories.map((item)=>{
                         return(
@@ -154,7 +164,7 @@ const MainHeader = () => {
                                     </select>
                                     <input type="text" placeholder="Enter your search key ..."/>
                                     <button class="li-btn" type="submit">
-                                    <FontAwesomeIcon icon={faSearch} />
+                                    <FontAwesomeIcon icon={faSearch} onClick={serachProducts}/>
                                         </button>
                                 </form>
                       

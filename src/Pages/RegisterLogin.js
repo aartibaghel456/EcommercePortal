@@ -22,8 +22,8 @@ const RegisterLogin =() =>{
         .then(response => {
           setFormSubmitted(false);
           if(response.data.data){
-          localStorage.setItem("userInfo", JSON.stringify(response.data.data));
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("customerInfo", JSON.stringify(response.data.data));
+          localStorage.setItem("ftoken", response.data.token);
           navigate("/");
           }
           else{

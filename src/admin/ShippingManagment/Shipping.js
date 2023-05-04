@@ -1,15 +1,16 @@
-import axios from 'axios'
-import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-const Categories = (props) => {
-  const [getCategories, setCategories] = useState([]);
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+const Shipping=() =>{
+    const [getShipping, setShipping] = useState([]);
  
   useEffect(() => {
     let mounted = true;
-    getCategoriesList().then(function (response) {
+    getShippingList().then(function (response) {
       // handle success
       if(mounted) {
-        setCategories(response.data.data);
+        setShipping(response.data.data);
       }
       
     })
@@ -22,27 +23,17 @@ const Categories = (props) => {
     })
     return () => mounted = false;
   },[])
-  const getCategoriesList = ()=>{
-    return axios.get('http://localhost:5000/categories');
+  const getShippingList = ()=>{
+    return axios.get('http://localhost:5000/shipping');
      
    }
-  const deleteCategory = useCallback(
-    (id) => () => {
-      if (window.confirm("Are you sure want to delete?")) {
-        console.log("ID: ", id)
-        axios.delete('http://localhost:5000/category',{data:{category_id:id}}).then((res)=>{
-          getCategoriesList().then(function (response) {
-            setCategories(response.data.data);
-            window.location.reload(false);
-          })
-        })
-      }
-      
-    },
-    [],
-  )
-    return(<>
-    <main id="main" class="main">
+
+   const cancelShipping =() =>{
+
+   }
+    return(
+        <>
+        <main id="main" class="main">
       <div class="pagetitle">
         <h1>Data Tables</h1>
         <nav>
@@ -82,17 +73,41 @@ const Categories = (props) => {
                     <table class="table datatable dataTable-table">
                       <thead>
                         <tr>
-                        <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">S.N</a>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">ID</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Category Name</a>
+                            <a href="#" class="dataTable-sorter">Country</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Category Description</a>
+                            <a href="#" class="dataTable-sorter">First Name</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Parent ID</a>
+                            <a href="#" class="dataTable-sorter">Last Name</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Company Name</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Address</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Address1</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">City</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">State</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Postcode</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Email Address</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Phone</a>
                           </th>
                           <th scope="col" data-sortable="" >
                         <a href="#" class="dataTable-sorter">Action</a>
@@ -101,16 +116,24 @@ const Categories = (props) => {
                       </thead>
                       <tbody>
                       {
-                      getCategories.map((item,i)=>{
+                      getShipping.map((item,i)=>{
                         return(<tr>
                           <th scope="row">{i+1}</th>
-                          <td>{item.category_name}</td>
-                          <td>{item.category_description}</td>
-                          <td>{item.parent_id}</td>
-                          <td> <Link to={'/admin/editcategory/'+item.id}>
-             Edit
-            </Link> | <Link onClick={deleteCategory(item.id)}>
-             Delete
+                          <td>{item.country}</td>
+                          <td>{item.first_name}</td>
+                          <td>{item.last_name}</td>
+                          <td>{item.company_name}</td>
+                          <td>{item.address}</td>
+                          <td>{item.address1}</td>
+                          <td>{item.city}</td>
+                          <td>{item.state}</td>
+                          <td>{item.postcode}</td>
+                          <td>{item.email_address}</td>
+                          <td>{item.phone}</td>
+                          <td> <Link to={'/admin/updateshipping/'+item.id}>
+             Update
+            </Link> | <Link onClick={cancelShipping(item.id)}>
+             Cancel
             </Link></td>
                         </tr>)
                       })
@@ -131,7 +154,9 @@ const Categories = (props) => {
         </div>
       </section>
     </main>
-    </>)
-    }
-    
-    export default Categories;
+        </>
+    )
+}
+
+
+export default Shipping;

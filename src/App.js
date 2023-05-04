@@ -10,7 +10,6 @@ import RequireAuth from './admin/pages/RequireAuth';
 import AddNewUser from './admin/UserManagment/AddNew';
 import EditUser from './admin/UserManagment/EditUser';
 import Layout from './admin/componants/Layout';
-import Basic_Layout from './Basic_Layout';
 import Products from './admin/ProductManagment/Products';
 import AddNewProduct from './admin/ProductManagment/AddNewProduct';
 import EditProduct from './admin/ProductManagment/EditProduct';
@@ -27,9 +26,16 @@ import CategoryProduct from './Pages/CategoryProduct';
 import Checkout from './Pages/Checkout';
 import Fullcart from './Pages/Fullcart';
 import RegisterLogin from './Pages/RegisterLogin';
+import Orders from './admin/OrderManagment/Orders';
+import OrderDetails from './admin/OrderManagment/OrderDetails';
+import Billing from './admin/BillingManagment/Billing';
+import Shipping from './admin/ShippingManagment/Shipping';
+import PaymentMethods from './admin/PaymentManagment/PaymentMethods';
+import EditPayments from './admin/PaymentManagment/EditPayments';
+import AddNewPayment from './admin/PaymentManagment/AddNewPayment';
 
 function App() {
-  let authed = localStorage.getItem("userInfo");
+  //let authed = localStorage.getItem("userInfo");
   return (
     <BrowserRouter>
 
@@ -41,6 +47,7 @@ function App() {
            <Route path='/check-out' element={<Checkout />} />
            <Route path='/full-cart' element={<Fullcart />} />
            <Route path='/register-login' element={<RegisterLogin />} />
+           
     
         </Route>
      
@@ -111,6 +118,41 @@ function App() {
           <Route path="/admin/editpage/:id" element={
           <RequireAuth>
           <EditPage />
+          </RequireAuth>
+          } />
+          <Route path="/admin/orders" element={
+          <RequireAuth>
+          <Orders />
+          </RequireAuth>
+          } />
+          <Route path="/admin/orderdetails/:id" element={
+          <RequireAuth>
+          <OrderDetails />
+          </RequireAuth>
+          } />
+          <Route path="/admin/billing" element={
+          <RequireAuth>
+          <Billing />
+          </RequireAuth>
+          } />
+          <Route path="/admin/shipping" element={
+          <RequireAuth>
+          <Shipping />
+          </RequireAuth>
+          } />
+          <Route path="/admin/paymentmethods" element={
+          <RequireAuth>
+          <PaymentMethods />
+          </RequireAuth>
+          } />
+          <Route path="/admin/editpayments/:id" element={
+          <RequireAuth>
+          <EditPayments />
+          </RequireAuth>
+          } />
+          <Route path="/admin/addnewpayment" element={
+          <RequireAuth>
+          <AddNewPayment />
           </RequireAuth>
           } />
           <Route path="*" element={<Notfound />} />

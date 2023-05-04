@@ -1,15 +1,17 @@
-import axios from 'axios'
-import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-const Categories = (props) => {
-  const [getCategories, setCategories] = useState([]);
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+const Orders =() => {
+
+    const [getOrders, setOrders] = useState([]);
  
   useEffect(() => {
     let mounted = true;
-    getCategoriesList().then(function (response) {
+    getOrdersList().then(function (response) {
       // handle success
       if(mounted) {
-        setCategories(response.data.data);
+        setOrders(response.data.data);
       }
       
     })
@@ -22,27 +24,18 @@ const Categories = (props) => {
     })
     return () => mounted = false;
   },[])
-  const getCategoriesList = ()=>{
-    return axios.get('http://localhost:5000/categories');
+  const getOrdersList = ()=>{
+    return axios.get('http://localhost:5000/orders');
      
    }
-  const deleteCategory = useCallback(
-    (id) => () => {
-      if (window.confirm("Are you sure want to delete?")) {
-        console.log("ID: ", id)
-        axios.delete('http://localhost:5000/category',{data:{category_id:id}}).then((res)=>{
-          getCategoriesList().then(function (response) {
-            setCategories(response.data.data);
-            window.location.reload(false);
-          })
-        })
-      }
-      
-    },
-    [],
-  )
-    return(<>
-    <main id="main" class="main">
+
+   const cancelOrder =() =>{
+
+   }
+
+    return(
+        <>
+        <main id="main" class="main">
       <div class="pagetitle">
         <h1>Data Tables</h1>
         <nav>
@@ -82,17 +75,27 @@ const Categories = (props) => {
                     <table class="table datatable dataTable-table">
                       <thead>
                         <tr>
-                        <th scope="col" data-sortable="" >
+                          <th scope="col" data-sortable="" >
                             <a href="#" class="dataTable-sorter">S.N</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Category Name</a>
+                          
+                            <a href="#" class="dataTable-sorter">Order Number</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Category Description</a>
+                            <a href="#" class="dataTable-sorter">Order By</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Parent ID</a>
+                            <a href="#" class="dataTable-sorter">Order Notes</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Payment Status</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Order Amount</a>
+                          </th>
+                          <th scope="col" data-sortable="" >
+                            <a href="#" class="dataTable-sorter">Order Date</a>
                           </th>
                           <th scope="col" data-sortable="" >
                         <a href="#" class="dataTable-sorter">Action</a>
@@ -101,16 +104,19 @@ const Categories = (props) => {
                       </thead>
                       <tbody>
                       {
-                      getCategories.map((item,i)=>{
+                      getOrders.map((item,i)=>{
                         return(<tr>
                           <th scope="row">{i+1}</th>
-                          <td>{item.category_name}</td>
-                          <td>{item.category_description}</td>
-                          <td>{item.parent_id}</td>
-                          <td> <Link to={'/admin/editcategory/'+item.id}>
-             Edit
-            </Link> | <Link onClick={deleteCategory(item.id)}>
-             Delete
+                          <td><Link to={'/admin/orderdetails/'+item.order_number}>{item.order_number}</Link></td>
+                          <td>{item.name}</td>
+                          <td>{item.order_notes}</td>
+                          <td>{item.payment_status}</td>
+                          <td>{item.total}</td>
+                          <td>{item.created_date}</td>
+                          <td> <Link to={'/admin/updateorder/'+item.id}>
+             Update
+            </Link> | <Link onClick={cancelOrder(item.id)}>
+             Cancel
             </Link></td>
                         </tr>)
                       })
@@ -131,7 +137,9 @@ const Categories = (props) => {
         </div>
       </section>
     </main>
-    </>)
-    }
-    
-    export default Categories;
+        </>
+    )
+}
+
+
+export default Orders;

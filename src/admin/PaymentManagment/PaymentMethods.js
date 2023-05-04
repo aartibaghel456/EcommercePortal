@@ -1,15 +1,16 @@
-import axios from 'axios'
-import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-const Categories = (props) => {
-  const [getCategories, setCategories] = useState([]);
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+const PaymentMethods=() =>{
+    const [getPaymentMethods, setPaymentMethods] = useState([]);
  
   useEffect(() => {
     let mounted = true;
-    getCategoriesList().then(function (response) {
+    getPaymentMethodsList().then(function (response) {
       // handle success
       if(mounted) {
-        setCategories(response.data.data);
+        setPaymentMethods(response.data.data);
       }
       
     })
@@ -22,27 +23,29 @@ const Categories = (props) => {
     })
     return () => mounted = false;
   },[])
-  const getCategoriesList = ()=>{
-    return axios.get('http://localhost:5000/categories');
+  const getPaymentMethodsList = ()=>{
+    return axios.get('http://localhost:5000/paymentmethods');
      
    }
-  const deleteCategory = useCallback(
+
+   const deletepayment = useCallback(
     (id) => () => {
       if (window.confirm("Are you sure want to delete?")) {
         console.log("ID: ", id)
-        axios.delete('http://localhost:5000/category',{data:{category_id:id}}).then((res)=>{
-          getCategoriesList().then(function (response) {
-            setCategories(response.data.data);
-            window.location.reload(false);
-          })
+        axios.delete('http://localhost:5000/paymentmethods',{data:{payment_id:id}}).then((res)=>{
+console.log(res)
+window.location.reload(false);
         })
       }
       
     },
     [],
   )
-    return(<>
-    <main id="main" class="main">
+
+   
+    return(
+        <>
+        <main id="main" class="main">
       <div class="pagetitle">
         <h1>Data Tables</h1>
         <nav>
@@ -82,17 +85,17 @@ const Categories = (props) => {
                     <table class="table datatable dataTable-table">
                       <thead>
                         <tr>
-                        <th scope="col" data-sortable="" >
+                          <th scope="col" data-sortable="" >
                             <a href="#" class="dataTable-sorter">S.N</a>
                           </th>
-                          <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Category Name</a>
+                          <th scope="col" data-sortable="" >                      
+                            <a href="#" class="dataTable-sorter">Payment Type</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Category Description</a>
+                            <a href="#" class="dataTable-sorter">Description</a>
                           </th>
                           <th scope="col" data-sortable="" >
-                            <a href="#" class="dataTable-sorter">Parent ID</a>
+                            <a href="#" class="dataTable-sorter">Date</a>
                           </th>
                           <th scope="col" data-sortable="" >
                         <a href="#" class="dataTable-sorter">Action</a>
@@ -101,15 +104,15 @@ const Categories = (props) => {
                       </thead>
                       <tbody>
                       {
-                      getCategories.map((item,i)=>{
+                      getPaymentMethods.map((item,i)=>{
                         return(<tr>
                           <th scope="row">{i+1}</th>
-                          <td>{item.category_name}</td>
-                          <td>{item.category_description}</td>
-                          <td>{item.parent_id}</td>
-                          <td> <Link to={'/admin/editcategory/'+item.id}>
+                          <td>{item.payment_type}</td>
+                          <td>{item.description}</td>
+                          <td>{item.created_date}</td>
+                          <td> <Link to={'/admin/editpayments/'+item.id}>
              Edit
-            </Link> | <Link onClick={deleteCategory(item.id)}>
+            </Link> | <Link onClick={deletepayment(item.id)}>
              Delete
             </Link></td>
                         </tr>)
@@ -131,7 +134,8 @@ const Categories = (props) => {
         </div>
       </section>
     </main>
-    </>)
-    }
-    
-    export default Categories;
+        </>
+    )
+}
+
+export default PaymentMethods;

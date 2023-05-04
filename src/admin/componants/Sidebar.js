@@ -98,6 +98,72 @@ const Sidebar = () => {
         </ul>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#orders-nav" data-bs-toggle="collapse" href="#">
+          <Person color="royalblue" size={16} />
+          <span>Order Managment</span>   
+          <ChevronDown className='ms-auto'/>
+        </a>
+        <ul id="orders-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <Link to="/admin/orders">
+              <Circle size={16} />
+              <span>Orders</span>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#billing-nav" data-bs-toggle="collapse" href="#">
+          <Person color="royalblue" size={16} />
+          <span>Billing Managment</span>   
+          <ChevronDown className='ms-auto'/>
+        </a>
+        <ul id="billing-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <Link to="/admin/billing">
+              <Circle size={16} />
+              <span>Billing</span>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#shipping-nav" data-bs-toggle="collapse" href="#">
+          <Person color="royalblue" size={16} />
+          <span>Shipping Managment</span>   
+          <ChevronDown className='ms-auto'/>
+        </a>
+        <ul id="shipping-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <Link to="/admin/shipping">
+              <Circle size={16} />
+              <span>Shipping</span>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#paymentmethos-nav" data-bs-toggle="collapse" href="#">
+          <Person color="royalblue" size={16} />
+          <span>Payment Managment</span>   
+          <ChevronDown className='ms-auto'/>
+        </a>
+        <ul id="paymentmethos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <Link to="/admin/paymentmethods">
+              <Circle size={16} />
+              <span>PaymentMethods</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin/addnewpayment">
+              <Circle size={16} />
+              <span>AddNewPayment</span>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <MenuButtonWide color="royalblue" size={16} />
           <span>Components</span>   
